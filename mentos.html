@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	
+
+
+<style>
+body{background-color:green; font-family:"Arial", Arial Black, monospace; margin: 20px;}
+p{color:white;}
+li {margin-left: 20px;}
+div {
+    background-color: white;
+    width: 80%;
+    border: 50px;
+    padding: 25px;
+    margin: 25px;
+}
+</style>
+
+<meta charset="UTF-8">
+<title>MENTO</title>
+</head>
+
+<body>
+
+<h1 style="color:white;">MENTO</h1>
+<p><b>Are you a mentor?</b> </p>
+<p>Here's the right site for you to manage your mentees!</p>
+<p id="dism"></p>
+<button id="cre"; style="background-color: gold; color: green; padding: 20px 20px; margin: 8px 0; border: none; cursor: pointer; width: 30%; opacity: 1;" onClick="crement(a)"><b>CREATE MENTEE</b></button>
+<button id="ra"; style="background-color: gold; color: green; padding: 20px 20px; margin: 8px 0; border: none; cursor: pointer; width: 30%; opacity: 1;" onClick="rament(a)"><b>RATE MENTEE</b></button>
+<button id="edi"; style="background-color: gold; color: green; padding: 20px 20px; margin: 8px 0; border: none; cursor: pointer; width: 30%; opacity: 1;" onClick="ediment(a)"><b>EDIT MENTEE</b></button>
+<button id="de"; style="background-color: gold; color: green; padding: 20px 20px; margin: 8px 0; border: none; cursor: pointer; width: 30%; opacity: 1;" onClick="dement(a)"><b>DELETE MENTEE</b></button>
+<button id="co"; style="background-color: gold; color: green; padding: 20px 20px; margin: 8px 0; border: none; cursor: pointer; width: 30%; opacity: 1;" onClick="coment(a)"><b>COMMENT</b></button>
+<button id="cle"; style="background-color: gold; color: green; padding: 20px 20px; margin: 8px 0; border: none; cursor: pointer; width: 30%; opacity: 1;" onClick="clement(a)"><b>CLEAR ALL</b></button>
+<p id="disa"></p>
+
+<script type="text/javascript">
+
+if(localStorage.getItem("mentar") !=null){
+	var a = localStorage.getItem("mentar").split(" ");
+	disall(a);}
+else{
+	var a= [];}
+
+
+function crement(a){
+	var name = prompt("Name?");                      
+	var rollno = prompt("Roll number?");
+	var rat = "TBD";
+	var comm = "TBD";
+	a.push(name);
+	localStorage.setItem(name, [name, rollno, rat, comm].toString());
+	clear(a);
+	disall(a);
+	meno(a);
+	savm(a);
+}
+function disment(a){
+	if(a.length>0){
+		var n = prompt("Name?");
+		var f=0;
+		for(var i=0; i<a.length; i++){
+			if(a[i] == n){
+				var lsd = localStorage.getItem(n).split(",");	
+				var d = "<b>Name:</b>" + lsd[0] + "<br/><b>Roll No:</b>" + lsd[1] + "<br/><b>Rating:</b>" + lsd[2] + "<br/><b>Comments:</b>" + lsd[3] + "<br/>"; 
+				document.getElementById("dism").innerHTML = "<div>" + d + "</div>";
+				f=1;
+				break;}}
+	
+		if(f==0){window.alert("None like that.");}		
+}
+	else{
+		window.alert("No mentee.")}
+	clear(a);
+	disall(a);
+	meno(a);
+	savm(a);
+}
+function rament(a){
+	if(a.length>0){
+		var n = prompt("Name?");
+		var f=0;
+		for(i in a){
+			if(a[i] == n){
+				var lsd = localStorage.getItem(n).split(",");
+				var r = prompt("Rating?(Out of 5.)");
+				lsd[2] = r;
+				localStorage.setItem(n, lsd.toString());
+				f=1;
+				break;}}
+		if(f==0){window.alert("None like that.");}	
+	}	
+	else{
+		window.alert("No mentee to rate.")}
+	clear(a);
+	disall(a);
+	meno(a);
+	savm(a);
+}
+function coment(a){
+	if(a.length>0){
+		var n = prompt("Name?");
+		var f=0;
+		for(i in a){
+			if(a[i] == n){
+				var lsd = localStorage.getItem(n).split(",");
+				var c = prompt("Comments?");
+				lsd[3] = c;
+				localStorage.setItem(n, lsd.toString());
+				f=1;
+				break;}}
+		if(f==0){window.alert("None like that.");}	
+	}	
+	else{
+		window.alert("No mentee to comment.")}
+	clear(a);
+	disall(a);
+	meno(a);
+	savm(a);
+}
+function ediment(a){
+	if(a.length>0){
+		var n = prompt("Name?");
+		var f=0;
+		for(i in a){
+			if(a[i] == n){
+				var lsd = localStorage.getItem(n).split(",");
+				var na = prompt("New Name?");
+				lsd[0] = na;
+				var rn = prompt("New Roll No?");
+				lsd[1] = rn;
+				localStorage.setItem(na, lsd.toString());
+				localStorage.removeItem(n);
+				var index = a.indexOf(n);
+				a.splice(index, 1);
+				a.push(lsd[0]);
+				f=1;
+				break;}}
+		if(f==0){window.alert("None like that.");}	
+	}	
+	else{
+		window.alert("No mentee to edit.")}
+	clear(a);
+	disall(a);
+	meno(a);
+	savm(a);
+}
+function dement(a){
+	if(a.length>0){
+		var n = prompt("Name?");
+		var f=0;
+		for(i in a){
+			if(a[i] == n){
+				localStorage.removeItem(n);
+				var index = a.indexOf(n);
+				a.splice(index, 1);
+				f=1;
+				break;}}
+		if(f==0){window.alert("None like that.");}	
+		}	
+	else{
+		window.alert("No mentee to delete")}
+	clear(a);
+	disall(a);
+	meno(a);
+	savm(a);
+}
+function clear(a){
+	document.getElementById("disa").innerHTML = "<div></div>";}
+function disall(a){
+	for(var i=0; i<a.length; i++){
+		var b = localStorage.getItem(a[i]);
+		if(b != null){
+			var lsd = b.split(",");
+			var d = "<b>Name:</b>" + lsd[0] + "<br/><b>Roll No:</b>" + lsd[1] + "<br/><b>Rating:</b>" + lsd[2] + "<br/><b>Comments:</b>" + lsd[3] + "<br/>"; 
+			document.getElementById("disa").innerHTML += "<div>" + d + "</div></br>";}}
+}
+function meno(a){
+	document.getElementById("dism").innerHTML = "You have "+"<b>"+a.length + " mentees.</b>";
+	if(a.length==1){
+		document.getElementById("dism").innerHTML = "You have "+"<b>a mentee.</b>";}}
+function savm(a){
+	localStorage.setItem("mentar", a.toString());}
+
+function clement(a){
+	localStorage.clear();
+	a = [];
+	clear(a);
+	window.alert("Cleared.");}
+</script>
+</body>
+</html>
